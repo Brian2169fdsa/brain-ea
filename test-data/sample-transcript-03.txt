@@ -1,0 +1,1 @@
+// Placeholder: Sample meeting transcript #3 for fact extraction testing

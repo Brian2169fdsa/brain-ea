@@ -1,0 +1,20 @@
+{
+  "name": "claude-ea-setup",
+  "version": "1.0.0",
+  "description": "Claude EA with Relationship Intelligence",
+  "scripts": {
+    "01:create-databases": "node scripts/01-create-notion-databases.js",
+    "02:seed-data": "node scripts/02-seed-test-data.js",
+    "03:test-extraction": "node scripts/03-test-fact-extraction.js",
+    "04:test-relationships": "node scripts/04-test-relationship-query.js",
+    "05:test-graph": "node scripts/05-test-graph-api.js",
+    "06:test-pipedrive": "node scripts/06-test-pipedrive-sync.js",
+    "07:generate-blueprints": "node scripts/07-generate-make-blueprints.js"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.0",
+    "@anthropic-ai/sdk": "^0.20.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.0"
+  }
+}

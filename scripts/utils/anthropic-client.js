@@ -1,7 +1,14 @@
 const Anthropic = require("@anthropic-ai/sdk");
 require("dotenv").config({ path: require("path").resolve(__dirname, "../..", ".env") });
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+// Proxy support
+const proxyUrl = process.env.HTTPS_PROXY || process.env.GLOBAL_AGENT_HTTPS_PROXY;
+const clientOpts = { apiKey: process.env.ANTHROPIC_API_KEY };
+if (proxyUrl) {
+  const { HttpsProxyAgent } = require("https-proxy-agent");
+  clientOpts.httpAgent = new HttpsProxyAgent(proxyUrl);
+}
+const client = new Anthropic(clientOpts);
 
 const DEFAULT_MODEL = process.env.CLAUDE_MODEL || "claude-sonnet-4-5-20250929";
 

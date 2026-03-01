@@ -1,6 +1,14 @@
 const axios = require("axios");
 require("dotenv").config({ path: require("path").resolve(__dirname, "../..", ".env") });
 
+// Proxy support
+const proxyUrl = process.env.HTTPS_PROXY || process.env.GLOBAL_AGENT_HTTPS_PROXY;
+if (proxyUrl) {
+  const { HttpsProxyAgent } = require("https-proxy-agent");
+  axios.defaults.httpsAgent = new HttpsProxyAgent(proxyUrl);
+  axios.defaults.proxy = false; // let the agent handle proxying
+}
+
 const PIPEDRIVE_BASE = `https://${process.env.PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1`;
 const RATE_LIMIT_DELAY = 200; // ms between requests
 

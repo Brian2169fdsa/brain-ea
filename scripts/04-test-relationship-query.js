@@ -91,9 +91,8 @@ async function main() {
       { property: "Relationship", relation: { contains: relId } },
     ],
   });
-  // Filter out done tasks client-side (status property is different)
   const openTasks = tasks.filter((t) => {
-    const status = t.properties.Status?.status?.name;
+    const status = t.properties.Status?.select?.name;
     return status !== "Done";
   });
   console.log(`  ✓ Found ${openTasks.length} open tasks\n`);

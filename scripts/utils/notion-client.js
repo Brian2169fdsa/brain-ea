@@ -3,22 +3,45 @@ require("dotenv").config({ path: require("path").resolve(__dirname, "../..", ".e
 
 const RATE_LIMIT_DELAY = 350; // ms between sequential Notion API calls
 
-const notion = new Client({ auth: process.env.NOTION_TOKEN });
+// Proxy support: use https-proxy-agent if HTTPS_PROXY is set
+const proxyUrl = process.env.HTTPS_PROXY || process.env.GLOBAL_AGENT_HTTPS_PROXY;
+let fetchWithProxy;
+if (proxyUrl) {
+  const { HttpsProxyAgent } = require("https-proxy-agent");
+  const nodeFetch = require("node-fetch");
+  const agent = new HttpsProxyAgent(proxyUrl);
+  fetchWithProxy = (url, init) => nodeFetch(url, { ...init, agent });
+}
+
+const notion = new Client({
+  auth: process.env.NOTION_TOKEN,
+  timeoutMs: 120000,
+  ...(fetchWithProxy ? { fetch: fetchWithProxy } : {}),
+});
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function notionRequest(fn, label = "Notion API") {
-  try {
-    const result = await fn();
-    await sleep(RATE_LIMIT_DELAY);
-    return result;
-  } catch (error) {
-    const status = error?.status || error?.response?.status || "unknown";
-    const body = error?.body || error?.response?.data || error?.message;
-    console.error(`[${label}] Error (${status}):`, JSON.stringify(body, null, 2));
-    throw error;
+async function notionRequest(fn, label = "Notion API", maxRetries = 3) {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const result = await fn();
+      await sleep(RATE_LIMIT_DELAY);
+      return result;
+    } catch (error) {
+      const status = error?.status || error?.response?.status || 0;
+      const retryable = [429, 502, 503, 504].includes(status);
+      if (retryable && attempt < maxRetries) {
+        const delay = Math.pow(2, attempt + 1) * 1000;
+        console.warn(`[${label}] Status ${status}, retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries})...`);
+        await sleep(delay);
+        continue;
+      }
+      const body = error?.body || error?.response?.data || error?.message;
+      console.error(`[${label}] Error (${status}):`, JSON.stringify(body, null, 2));
+      throw error;
+    }
   }
 }
 

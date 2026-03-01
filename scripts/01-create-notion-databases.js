@@ -24,10 +24,16 @@ async function main() {
   }
 
   // Step 1: Create a workspace page as parent for all databases
+  const notionParentPageId = process.env.NOTION_PARENT_PAGE_ID;
+  if (!notionParentPageId) {
+    console.error("ERROR: NOTION_PARENT_PAGE_ID not set in .env");
+    process.exit(1);
+  }
+
   console.log("Creating workspace page: Claude EA...");
   const workspacePage = await notionRequest(() =>
     notion.pages.create({
-      parent: { workspace: true },
+      parent: { type: "page_id", page_id: notionParentPageId },
       properties: {
         title: [{ type: "text", text: { content: "Claude EA" } }],
       },
@@ -219,17 +225,12 @@ async function main() {
   const tasksDb = await createDatabase(parentPageId, "Tasks", {
     Name: { title: {} },
     Status: {
-      status: {
+      select: {
         options: [
-          { name: "To Do", color: "default" },
-          { name: "In Progress", color: "blue" },
+          { name: "Not started", color: "default" },
+          { name: "In progress", color: "blue" },
           { name: "Done", color: "green" },
           { name: "Blocked", color: "red" },
-        ],
-        groups: [
-          { name: "To-do", option_ids: [], color: "gray" },
-          { name: "In progress", option_ids: [], color: "blue" },
-          { name: "Complete", option_ids: [], color: "green" },
         ],
       },
     },

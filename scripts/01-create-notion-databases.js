@@ -218,6 +218,21 @@ async function main() {
   console.log("Creating Tasks database...");
   const tasksDb = await createDatabase(parentPageId, "Tasks", {
     Name: { title: {} },
+    Status: {
+      status: {
+        options: [
+          { name: "To Do", color: "default" },
+          { name: "In Progress", color: "blue" },
+          { name: "Done", color: "green" },
+          { name: "Blocked", color: "red" },
+        ],
+        groups: [
+          { name: "To-do", option_ids: [], color: "gray" },
+          { name: "In progress", option_ids: [], color: "blue" },
+          { name: "Complete", option_ids: [], color: "green" },
+        ],
+      },
+    },
     Priority: {
       select: {
         options: [

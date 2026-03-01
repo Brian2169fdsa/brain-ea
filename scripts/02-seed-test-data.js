@@ -14,6 +14,7 @@ const {
   numberProp,
   relationProp,
   checkboxProp,
+  statusProp,
   emailProp,
   phoneProp,
   extractTitle,
@@ -227,21 +228,22 @@ async function main() {
   console.log("\nCreating Tasks...\n");
 
   const tasks = [
-    { name: "Finalize Sunstate pilot pricing", priority: "P1 (High)", dueDate: "2026-03-07", project: "ManageAI", rel: "Sunstate Medical Transport", source: "Sunstate Demo Walkthrough", assignedTo: "Brian", createdBy: "Fact Extraction" },
-    { name: "Set up 3 facility Retell agents", priority: "P2 (Medium)", dueDate: "2026-03-12", project: "ManageAI", rel: "Sunstate Medical Transport", assignedTo: "Jacob", createdBy: "Fact Extraction" },
-    { name: "Draft Sunstate SOW for Tony's review", priority: "P1 (High)", dueDate: "2026-03-05", project: "ManageAI", rel: "Sunstate Medical Transport", assignedTo: "Brian", createdBy: "Fact Extraction" },
-    { name: "Send Dave capabilities deck", priority: "P1 (High)", dueDate: "2026-02-28", project: "ManageAI", rel: "Dave", assignedTo: "Brian", createdBy: "Fact Extraction", status: "To Do" },
-    { name: "Review Cornerstone contract security requirements", priority: "P2 (Medium)", dueDate: "2026-03-10", project: "ManageAI", rel: "Cornerstone General Contractors", assignedTo: "Brian", createdBy: "Fact Extraction" },
-    { name: "Update ManageAI pricing page", priority: "P3 (Low)", dueDate: null, project: "ManageAI", assignedTo: "Brian", createdBy: "Manual" },
-    { name: "Approve Jacob's Make builder PR", priority: "P2 (Medium)", dueDate: "2026-03-03", project: "ManageAI", rel: "Jacob", assignedTo: "Brian", createdBy: "Manual" },
-    { name: "Prepare ABCAC certification demo", priority: "P2 (Medium)", dueDate: "2026-03-08", project: "ManageAI", assignedTo: "Brian", createdBy: "Manual" },
-    { name: "Follow up with Robert on GTM deliverable", priority: "P1 (High)", dueDate: "2026-03-01", project: "ManageAI", rel: "Robert", assignedTo: "Brian", createdBy: "Fact Extraction" },
-    { name: "Research Phoenix Health Systems per Dave's rec", priority: "P3 (Low)", dueDate: null, project: "ManageAI", rel: "Dave", assignedTo: "Brian", createdBy: "Fact Extraction" },
+    { name: "Finalize Sunstate pilot pricing", status: "To Do", priority: "P1 (High)", dueDate: "2026-03-07", project: "ManageAI", rel: "Sunstate Medical Transport", source: "Sunstate Demo Walkthrough", assignedTo: "Brian", createdBy: "Fact Extraction" },
+    { name: "Set up 3 facility Retell agents", status: "To Do", priority: "P2 (Medium)", dueDate: "2026-03-12", project: "ManageAI", rel: "Sunstate Medical Transport", assignedTo: "Jacob", createdBy: "Fact Extraction" },
+    { name: "Draft Sunstate SOW for Tony's review", status: "To Do", priority: "P1 (High)", dueDate: "2026-03-05", project: "ManageAI", rel: "Sunstate Medical Transport", assignedTo: "Brian", createdBy: "Fact Extraction" },
+    { name: "Send Dave capabilities deck", status: "To Do", priority: "P1 (High)", dueDate: "2026-02-28", project: "ManageAI", rel: "Dave", assignedTo: "Brian", createdBy: "Fact Extraction" },
+    { name: "Review Cornerstone contract security requirements", status: "To Do", priority: "P2 (Medium)", dueDate: "2026-03-10", project: "ManageAI", rel: "Cornerstone General Contractors", assignedTo: "Brian", createdBy: "Fact Extraction" },
+    { name: "Update ManageAI pricing page", status: "To Do", priority: "P3 (Low)", dueDate: null, project: "ManageAI", assignedTo: "Brian", createdBy: "Manual" },
+    { name: "Approve Jacob's Make builder PR", status: "To Do", priority: "P2 (Medium)", dueDate: "2026-03-03", project: "ManageAI", rel: "Jacob", assignedTo: "Brian", createdBy: "Manual" },
+    { name: "Prepare ABCAC certification demo", status: "To Do", priority: "P2 (Medium)", dueDate: "2026-03-08", project: "ManageAI", assignedTo: "Brian", createdBy: "Manual" },
+    { name: "Follow up with Robert on GTM deliverable", status: "In Progress", priority: "P1 (High)", dueDate: "2026-03-01", project: "ManageAI", rel: "Robert", assignedTo: "Brian", createdBy: "Fact Extraction" },
+    { name: "Research Phoenix Health Systems per Dave's rec", status: "To Do", priority: "P3 (Low)", dueDate: null, project: "ManageAI", rel: "Dave", assignedTo: "Brian", createdBy: "Fact Extraction" },
   ];
 
   for (const t of tasks) {
     const properties = {
       Name: titleProp(t.name),
+      Status: statusProp(t.status || "To Do"),
       Priority: selectProp(t.priority),
       Project: selectProp(t.project),
       "Assigned To": richText(t.assignedTo || "Brian"),

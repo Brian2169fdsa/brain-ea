@@ -36,7 +36,7 @@
       "module": "notion:searchObjects",
       "version": 2,
       "parameters": {
-        "database_id": "31653dc5-eede-8182-97a5-fa7b96aa1931"
+        "database_id": "31653dc5-eede-81a0-9e1d-f8429457e2b9"
       },
       "mapper": {
         "filter": {
@@ -59,7 +59,7 @@
       "module": "notion:createAPage",
       "version": 2,
       "parameters": {
-        "database_id": "31653dc5-eede-8182-97a5-fa7b96aa1931"
+        "database_id": "31653dc5-eede-81a0-9e1d-f8429457e2b9"
       },
       "mapper": {
         "properties": {

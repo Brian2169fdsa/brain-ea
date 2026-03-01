@@ -1,6 +1,14 @@
 const axios = require("axios");
 require("dotenv").config({ path: require("path").resolve(__dirname, "../..", ".env") });
 
+// Proxy support
+const proxyUrl = process.env.HTTPS_PROXY || process.env.GLOBAL_AGENT_HTTPS_PROXY;
+if (proxyUrl) {
+  const { HttpsProxyAgent } = require("https-proxy-agent");
+  axios.defaults.httpsAgent = new HttpsProxyAgent(proxyUrl);
+  axios.defaults.proxy = false;
+}
+
 const GRAPH_BASE = "https://graph.microsoft.com/v1.0";
 const TOKEN_URL = `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID}/oauth2/v2.0/token`;
 

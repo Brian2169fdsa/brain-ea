@@ -76,7 +76,7 @@ async function main() {
     // Test online meetings
     results.push(
       await testEndpoint(`GET /users/${testUserId}/onlineMeetings`, () =>
-        graphRequest("get", `/users/${testUserId}/onlineMeetings`, null, { $top: 5 })
+        graphRequest("get", `/users/${testUserId}/onlineMeetings`)
       )
     );
 

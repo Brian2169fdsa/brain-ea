@@ -1,1 +1,72 @@
-// Placeholder: Sample email thread #1 for fact extraction testing
+From: brian@manageai.io
+To: mike@cornerstonegc.com
+Date: February 24, 2026
+Subject: Re: Contract Review — Phase 1
+
+Mike,
+
+Thanks for sending over the requirements document. I've reviewed it with our team and here are my thoughts:
+
+1. The Phase 1 scope looks good. Automated proposal generation, document management, and the subcontractor portal are exactly the right starting priorities.
+
+2. On the security front — we're fully SOC 2 Type II certified and all data is encrypted at rest and in transit. I'll send over our security whitepaper and compliance documentation this week.
+
+3. For the go-live timeline, March 20 works for us. We'll need access to your existing document templates and proposal formats by March 5 to configure the system properly.
+
+4. The $8,500/month pricing we discussed includes unlimited users, 50GB document storage, and dedicated support during business hours.
+
+Let me know if you have any questions. Looking forward to getting started.
+
+Best,
+Brian
+
+---
+
+From: mike@cornerstonegc.com
+To: brian@manageai.io
+Date: February 23, 2026
+Subject: Re: Contract Review — Phase 1
+
+Brian,
+
+We've reviewed the Phase 1 SOW internally and we're ready to move forward. A few items:
+
+1. Our legal team approved the SOW. We're good to sign.
+
+2. Data security is critical for us. We store sensitive contract documents, bid proposals, and financial data. We need assurance that your platform meets enterprise security standards. Can you provide your SOC 2 report and a data flow diagram?
+
+3. We'd like the automated proposal generation feature to support our custom templates. We have about 30 standard templates that our estimators use daily.
+
+4. March 20 for go-live is our target. Our construction season ramps up in April and we need the system operational before then.
+
+5. Can we set up bi-weekly status calls to track progress? I want to make sure we stay on schedule.
+
+Looking forward to your response.
+
+Mike Thompson
+VP of Operations
+Cornerstone General Contractors
+
+---
+
+From: brian@manageai.io
+To: mike@cornerstonegc.com
+Date: February 20, 2026
+Subject: Contract Review — Phase 1
+
+Mike,
+
+Following up on our conversation last week. I've put together the Phase 1 SOW covering the three main components we discussed:
+
+1. Automated Proposal Generation — AI-powered system that drafts proposals from your templates, pulling in project specs, pricing, and compliance requirements automatically.
+
+2. Document Management — Centralized, searchable repository for all contract documents with version control and approval workflows.
+
+3. Subcontractor Portal — Self-service portal for subcontractors to submit bids, upload insurance certificates, and track payment status.
+
+Phase 1 pricing is $8,500/month. Phase 2 (analytics dashboard, mobile app, API integrations) would be scoped separately after Phase 1 is stable.
+
+I've attached the SOW for your review. Let me know your thoughts.
+
+Best,
+Brian

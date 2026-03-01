@@ -1,0 +1,210 @@
+{
+  "name": "EA-04 — Outlook Email Ingestion",
+  "flow": [
+    {
+      "id": 1,
+      "module": "builtin:BasicScheduler",
+      "version": 1,
+      "parameters": {
+        "scheduling": {
+          "type": "interval",
+          "interval": 15
+        },
+        "time": "07:00"
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {},
+      "mapper": {
+        "url": "https://graph.microsoft.com/v1.0/me/messages?$filter=receivedDateTime ge {{formatDate(addMinutes(now; -15); 'YYYY-MM-DDTHH:mm:ssZ')}}&$select=subject,from,toRecipients,body,receivedDateTime&$top=50",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{connection.token}}"
+          }
+        ],
+        "body": ""
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "builtin:BasicIterator",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "array": "{{body.value}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "notion:searchObjects",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "filter": {
+          "property": "External ID",
+          "rich_text": {
+            "equals": "{{item.id}}"
+          }
+        },
+        "sorts": []
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 5,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "parameters": {},
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "notion:createAPage",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "properties": {
+          "Title": {
+            "title": [
+              {
+                "text": {
+                  "content": "{{item.subject}}"
+                }
+              }
+            ]
+          },
+          "Type": {
+            "select": {
+              "name": "Email"
+            }
+          },
+          "Source": {
+            "select": {
+              "name": "Outlook"
+            }
+          },
+          "Date": {
+            "date": {
+              "start": "{{item.receivedDateTime}}"
+            }
+          },
+          "External ID": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": "{{item.id}}"
+                }
+              }
+            ]
+          },
+          "Raw Content": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": "{{item.body.content}}"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "designer": {
+          "x": 1800,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 7,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {},
+      "mapper": {
+        "url": "{{webhooks.EA03_URL}}",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": "{\"interaction_id\":\"{{steps[6].id}}\",\"type\":\"email\",\"raw_content\":\"{{item.body.content}}\"}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 2100,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 8,
+      "module": "builtin:BasicSleep",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "delay": 350
+      },
+      "metadata": {
+        "designer": {
+          "x": 2400,
+          "y": 0
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false
+    }
+  }
+}

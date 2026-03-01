@@ -1,1 +1,61 @@
-// Placeholder: Sample meeting transcript #1 for fact extraction testing
+00:00:15 Brian: Hey Tony, thanks for jumping on this call. I know you've got a packed schedule with the fleet operations.
+
+00:00:22 Tony: Yeah absolutely, excited to walk through the demo. We've been struggling with the manual call-ahead process and the team is really feeling it.
+
+00:00:45 Brian: Totally understand. So let me share my screen and walk you through what the Retell AI system looks like for the call-ahead workflow. Basically, we're replacing the manual phone calls your dispatchers make to facilities with an AI agent that handles it automatically.
+
+00:01:30 Tony: That's exactly what we need. Right now we've got dispatchers spending two to three hours a day just calling facilities to confirm patient arrival times. It's killing our efficiency.
+
+00:02:15 Brian: So for the pilot, I'm recommending we start with three facilities — Phoenix, Scottsdale, and Mesa. That gives us enough volume to validate the system without too much risk.
+
+00:02:40 Tony: Three facilities makes sense. Those are our highest-volume locations anyway. Phoenix alone does about 40 transports a day.
+
+00:03:10 Brian: Perfect. The system handles both inbound and outbound calls. For outbound, it calls the facility 30 minutes before the patient's scheduled arrival, confirms the appointment, and logs the confirmation back to your dispatch system.
+
+00:03:45 Tony: And what about when facilities call us? That's actually a bigger pain point.
+
+00:04:00 Brian: Great question. For inbound, the AI agent answers, identifies the facility, pulls up the relevant transport, and can handle rescheduling or cancellations on the spot. It all flows back into your system automatically.
+
+00:04:30 Tony: I like it. We looked at Halo Health last month — they pitched us something similar, but their integration timeline was like six months and the pricing was insane.
+
+00:05:00 Brian: Yeah, we're much faster on the implementation side. For the Retell integration specifically, we can have the three facility agents configured and tested within two weeks of kickoff.
+
+00:05:25 Tony: So if we kick off March 15, we'd be live by end of March?
+
+00:05:35 Brian: That's the target, yeah. March 15 start date, two weeks for setup and testing, then we go live around March 29 with all three facilities.
+
+00:05:55 Tony: March 15 works. I'll need to get buy-in from our operations director, but she's been pushing for automation too, so I don't see any issues.
+
+00:06:20 Brian: Awesome. On pricing, we're looking at $3,500 per month for the pilot covering all three facilities. That includes the Retell AI minutes, the integration setup, and ongoing support.
+
+00:06:45 Tony: That's way more reasonable than what Halo quoted us. Their monthly was almost double that. I do want to get pricing finalized by March 7 though — our budget approval cycle takes about a week.
+
+00:07:10 Brian: Absolutely, I'll have the formal pricing document over to you well before that.
+
+00:07:25 Tony: One thing I need to flag — patient data privacy is a big deal for us. We're dealing with PHI, so we need to make sure the AI system is HIPAA compliant and that call recordings are handled properly.
+
+00:07:55 Brian: One hundred percent. The Retell platform is HIPAA compliant, and we'll have a BAA in place before any patient data flows through the system. Call recordings are encrypted at rest and in transit, and we can set retention policies based on your compliance requirements.
+
+00:08:30 Tony: Good. Our compliance team will want to review the BAA and the data flow documentation before we go live.
+
+00:08:50 Brian: I'll include that in the SOW. Speaking of which, I'll have the full SOW drafted and sent to you by March 5 for your review.
+
+00:09:10 Tony: Perfect. Can we also set up bi-weekly check-ins once we start? I want to stay close to this during the pilot phase.
+
+00:09:25 Brian: Definitely. We'll do every other Tuesday — I'll send a calendar invite once we finalize the start date.
+
+00:09:45 Tony: Sounds good. Oh one more thing — can the AI agent handle Spanish? About 30% of our facility contacts prefer Spanish.
+
+00:10:05 Brian: Yes, Retell supports multilingual. We can configure the agents to detect language preference and switch automatically. We'll set that up during the pilot.
+
+00:10:30 Tony: That's huge. Halo couldn't do that at all.
+
+00:10:45 Brian: Alright Tony, I think we've covered a lot of ground. To summarize — three facility pilot starting March 15, $3,500 per month, SOW by March 5, pricing finalized by March 7, and we'll include HIPAA documentation and BAA in the package.
+
+00:11:10 Tony: That's right. I'm excited about this, Brian. I think it's going to be a game changer for our dispatch team.
+
+00:11:25 Brian: Same here. Let's make it happen. I'll get that SOW over to you this week.
+
+00:11:35 Tony: Sounds good. Talk soon.
+
+00:11:40 Brian: Thanks Tony, talk soon.

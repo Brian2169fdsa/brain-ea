@@ -1,1 +1,55 @@
-// Placeholder: Sample meeting transcript #3 for fact extraction testing
+00:00:10 Brian: Hey team, quick sync on the Sanctuary Recovery expansion. Thanks for joining, Jacob and Pat.
+
+00:00:20 Jacob: Sure thing. I've got some updates on the technical side.
+
+00:00:28 Pat: And I've got marketing updates for the new location.
+
+00:00:40 Brian: Great. Jacob, let's start with you. How's the patient portal integration going?
+
+00:00:50 Jacob: So the portal is about 80% complete. The patient intake forms are done, the appointment scheduling module works, and we've got the insurance verification API connected. The remaining 20% is the telehealth video integration and the billing module.
+
+00:01:20 Brian: Timeline to finish?
+
+00:01:25 Jacob: I need about two more weeks. So target completion around March 14. The telehealth piece depends on the Twilio integration, which has been a bit tricky.
+
+00:01:45 Brian: Is the Twilio issue a blocker?
+
+00:01:50 Jacob: Not a blocker, but it's slowing things down. Their API documentation for HIPAA-compliant video sessions is pretty sparse. I've been in touch with their support team and they said they'd get back to me by Monday.
+
+00:02:15 Brian: OK, let me know if you need me to escalate that. Pat, what's on the marketing side?
+
+00:02:25 Pat: So for the New Freedom location launch, I've been working on the digital campaign. We're targeting a 50-mile radius around the facility with Google Ads and Meta ads. Budget is $5,000 per month for the first three months.
+
+00:02:50 Brian: What's the expected patient acquisition cost?
+
+00:02:55 Pat: Based on our Sanctuary numbers, I'm estimating $800 to $1,200 per admitted patient. The New Freedom market is a bit more competitive, so it could be on the higher end.
+
+00:03:15 Brian: That's within our budget. What about the referral network?
+
+00:03:22 Pat: I've identified 15 potential referral partners — therapists, primary care doctors, and community organizations in the area. I want to schedule meet-and-greets with all of them before the launch.
+
+00:03:45 Brian: When's the launch date again?
+
+00:03:50 Pat: April 1 is the target. That gives us about a month to finalize everything.
+
+00:04:00 Brian: That's tight but doable. Jacob, will the portal be ready by April 1?
+
+00:04:10 Jacob: If I finish by March 14, we'd have two weeks for testing and bug fixes. Should be fine as long as Twilio doesn't throw us any curveballs.
+
+00:04:30 Brian: Good. Pat, I want you to also think about content marketing — blog posts, patient success stories, that kind of thing. We had great traction with that approach at Sanctuary.
+
+00:04:50 Pat: Already on it. I'm drafting a content calendar. I also think we should add consumer app patterns to our client-facing materials — things like clean onboarding flows, progress tracking dashboards. It makes the whole experience feel more modern.
+
+00:05:15 Brian: I like that. Let's add that to the product discussion with Chad.
+
+00:05:25 Jacob: One more thing — I've been looking into automating the admissions workflow. Right now it's very manual. If we could use the same AI patterns we're building at ManageAI — like the fact extraction pipeline — we could auto-populate patient profiles from intake calls.
+
+00:05:50 Brian: That's a brilliant idea. Let's not scope it for the April launch, but add it to the Q2 backlog. Jacob, can you write up a one-pager on how it would work?
+
+00:06:05 Jacob: Sure, I'll have it by next Friday.
+
+00:06:10 Brian: Perfect. Alright, to recap — Jacob finishes portal by March 14, Pat finalizes marketing campaign and referral outreach before April 1 launch, and we'll explore AI-powered admissions automation in Q2. Good meeting, team.
+
+00:06:30 Pat: Sounds good, Brian.
+
+00:06:35 Jacob: On it.

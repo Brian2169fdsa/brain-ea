@@ -1,0 +1,207 @@
+{
+  "name": "EA-05 — Relationship Intelligence Query",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "ip": "",
+        "method": "POST",
+        "headers": []
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "notion:searchObjects",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "filter": {
+          "property": "Name",
+          "title": {
+            "contains": "{{trigger.query}}"
+          }
+        },
+        "sorts": []
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "notion:searchObjects",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "filter": {
+          "property": "Relationship",
+          "relation": {
+            "contains": "{{steps[2][0].id}}"
+          }
+        },
+        "sorts": [
+          {
+            "property": "Extracted Date",
+            "direction": "descending"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "notion:searchObjects",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "filter": {
+          "property": "Relationship",
+          "relation": {
+            "contains": "{{steps[2][0].id}}"
+          }
+        },
+        "sorts": []
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 5,
+      "module": "notion:searchObjects",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "filter": {
+          "property": "Relationships",
+          "relation": {
+            "contains": "{{steps[2][0].id}}"
+          }
+        },
+        "sorts": [
+          {
+            "property": "Date",
+            "direction": "descending"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "util:SetVariable2",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "name": "profile",
+        "value": "{\"relationship\":{{JSON.stringify(steps[2][0])}},\"facts\":{{JSON.stringify(steps[3])}},\"tasks\":{{JSON.stringify(steps[4])}},\"interactions\":{{JSON.stringify(steps[5])}}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1800,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 7,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {},
+      "mapper": {
+        "url": "https://api.anthropic.com/v1/messages",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "x-api-key",
+            "value": "{{env.ANTHROPIC_API_KEY}}"
+          },
+          {
+            "name": "anthropic-version",
+            "value": "2023-06-01"
+          }
+        ],
+        "body": "{\"model\":\"claude-sonnet-4-5-20250929\",\"max_tokens\":4000,\"temperature\":0.3,\"system\":\"You are formatting a relationship intelligence brief for Brian.\\n\\nGiven structured data about a relationship (facts grouped by category, open tasks, recent interactions, alerts), create a concise, actionable brief.\\n\\nFORMAT:\\n👤 [RELATIONSHIP NAME] — [Type] | Stage: [Stage]\\nLast interaction: [Date] ([N] days ago)\\n{If Pipedrive data: Deal: [deal name] — [stage] — $[value]}\\n\\n🎯 ACTIVE COMMITMENTS\\n- [Commitment] — Due: [date] [⚠️ OVERDUE if past due] | Source: [interaction title, date]\\n- List commitments BY Brian and TO Brian separately\\n\\n📋 OPEN TASKS ([count])\\n- [Task] — [Priority] | Due: [date]\\n\\n💡 KEY CONTEXT & DECISIONS\\n- [Recent decisions, priorities, preferences, context facts]\\n- Source: [interaction title, date] for each\\n\\n⚠️ CONCERNS & RISKS\\n- [Any concerns raised, with who raised them and when]\\n- Flag unresolved concerns\\n\\n📈 RELATIONSHIP TRAJECTORY\\n- Brief assessment: interaction frequency trend, sentiment pattern, engagement level\\n- Flag if contact is going stale\\n\\nKeep it scannable. Source-ground everything. Highlight anything overdue or urgent. No fluff.\\n\",\"messages\":[{\"role\":\"user\",\"content\":\"Format an intelligence brief from this data:\\n\\n{{variables.profile}}\"}]}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 2100,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 8,
+      "module": "gateway:WebhookResponse",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "status": 200,
+        "body": "{{body.content[0].text}}",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 2400,
+          "y": 0
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false
+    }
+  }
+}

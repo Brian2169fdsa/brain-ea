@@ -1,1 +1,81 @@
-// Placeholder: Sample meeting transcript #2 for fact extraction testing
+00:00:10 Brian: Alright guys, let's dive in. Chad, Dave — thanks for making time. I want to cover Q2 plans, product roadmap, and a couple of strategic items.
+
+00:00:25 Chad: Yeah, let's do it. I've been thinking a lot about our pricing model and I have some concerns I want to raise.
+
+00:00:35 Dave: Same. I've got updates on the expansion budget and a partnership idea I want to run by you both.
+
+00:00:50 Brian: Perfect. Dave, let's start with the budget. Where are we on Q2 expansion?
+
+00:01:05 Dave: So I've locked in $200K for Q2 expansion. That covers two new hires, infrastructure scaling, and the marketing push. It's tight, but manageable if we prioritize correctly.
+
+00:01:30 Brian: Two new hires — what roles are you thinking?
+
+00:01:40 Dave: Senior full-stack engineer and a solutions architect. The solutions architect is critical because we're getting more enterprise deals and someone needs to handle the technical pre-sales and onboarding.
+
+00:02:05 Chad: I agree with the solutions architect hire, but I'm worried about the timeline. If we start recruiting now, we're looking at 8 to 10 weeks minimum to get someone onboarded. That puts us into mid-May before they're productive.
+
+00:02:30 Dave: That's a real concern. I'm hoping we can pull from our network and cut that timeline in half. I've already reached out to a couple of candidates informally.
+
+00:02:50 Brian: Good. Let's set a hard target of having offers out by mid-March. Chad, can you help with the technical interviews?
+
+00:03:05 Chad: Yeah, I'll block time for interviews. Now, about the pricing model — I'm concerned about sustainability. We're quoting $3,500 to $5,000 per month for pilots, but our infrastructure costs per client are running about $1,200. That's a 65% margin on paper, but when you factor in the implementation time and support hours, we're closer to 40%.
+
+00:03:45 Brian: So you're saying we need to either raise prices or reduce implementation costs?
+
+00:03:55 Chad: Both, ideally. But for Q2, I want to prioritize enterprise clients where we can charge $8,000 to $15,000 per month. The unit economics are much better at that tier because implementation scales sublinearly.
+
+00:04:20 Dave: That makes sense. Enterprise is where the real money is. SMB pilots are great for learning, but we can't build a business on them.
+
+00:04:40 Brian: Agreed. Let's make enterprise the Q2 priority. Chad, can you put together a revised pricing framework for the enterprise tier by next week?
+
+00:04:55 Chad: I'll have a draft by March 10. I also want to revisit the product roadmap to make sure we're building for enterprise use cases, not just SMB.
+
+00:05:15 Brian: Speaking of product — where are we on the roadmap?
+
+00:05:25 Chad: I've been working on it. The big items are: multi-tenant architecture improvements, role-based access control, and the Make builder enhancements that Jacob's been working on. Jacob actually just finished the Make builder refactor — that was a big lift.
+
+00:05:55 Brian: Nice, Jacob. That refactor has been in progress for weeks. How's it looking?
+
+00:06:05 Chad: It's solid. Clean code, good test coverage. I want Brian to review the PR by March 3 and then we'll ship it.
+
+00:06:20 Dave: On the strategic side, I've been exploring a healthcare IT partnership opportunity. There's a company called Phoenix Health Systems that does EHR integrations for mid-size hospital groups. They're looking for an automation partner.
+
+00:06:50 Brian: That sounds interesting. What's the opportunity?
+
+00:07:00 Dave: They've got about 30 hospital clients and they're looking to offer AI-powered patient communication as an add-on service. Basically exactly what we're doing with Sunstate, but packaged as a white-label solution through their platform.
+
+00:07:25 Brian: That could be huge. Dave, can you set up an intro call? I'd want to understand their technical requirements and what kind of revenue share they're thinking.
+
+00:07:40 Dave: Will do. I'll reach out this week. Also — Brian, you committed to sending me the capabilities deck by end of February. I need that before I can have a real conversation with Phoenix Health.
+
+00:07:55 Brian: You're right, I owe you that. I'll get it done.
+
+00:08:05 Chad: Back to the roadmap — I want to commit to finalizing the full product roadmap by March 10. That gives us time to align on priorities before the Q2 kickoff.
+
+00:08:25 Brian: Sounds good. Let's also talk about the ManageAI rebrand. Chad, you had a concept you wanted to share?
+
+00:08:35 Chad: Yeah, I've been working with a designer on a refresh. New logo, updated color palette, cleaner website. I think we're ready to approve the concept and move forward with implementation.
+
+00:08:55 Brian: I've seen the mockups and I like them. Dave, what do you think?
+
+00:09:05 Dave: I think it's good. The current branding feels a bit startup-y and if we're going after enterprise clients, we need to look the part.
+
+00:09:20 Brian: Alright, let's approve the rebrand concept and move forward. Chad, coordinate with the designer on timeline and deliverables.
+
+00:09:35 Chad: Will do.
+
+00:09:40 Brian: One more thing — Robert's go-to-market plan. He was supposed to have that deliverable ready by March 1. Dave, have you heard from him on it?
+
+00:09:55 Dave: I talked to Robert yesterday. He said he's on track for March 1. It covers the enterprise positioning, target verticals, and the outbound playbook.
+
+00:10:10 Brian: Good. I want to review it as soon as it's ready. Pat also had a good suggestion in our last meeting — she said we should add consumer app patterns to our client demos. I think that's worth exploring.
+
+00:10:30 Chad: Agreed. Consumer-grade UX in B2B software is a differentiator. Let's add that to the roadmap discussion.
+
+00:10:45 Brian: Alright, let me summarize. Q2 budget is $200K. We're hiring a senior engineer and solutions architect, offers out by mid-March. Enterprise is the Q2 priority. Chad commits to roadmap by March 10 and pricing framework. Dave is pursuing Phoenix Health partnership and needs the capabilities deck. Rebrand concept is approved. Robert's GTM plan due March 1.
+
+00:11:15 Dave: That's a solid plan. Let's execute.
+
+00:11:20 Chad: Agreed. Let's do it.
+
+00:11:25 Brian: Thanks guys. Talk soon.

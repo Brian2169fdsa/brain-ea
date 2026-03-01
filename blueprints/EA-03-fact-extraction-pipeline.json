@@ -1,0 +1,359 @@
+{
+  "name": "EA-03 — Fact Extraction Pipeline",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "ip": "",
+        "method": "POST",
+        "headers": []
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "parameters": {},
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "notion:searchObjects",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "filter": {
+          "property": "Title",
+          "title": {
+            "is_not_empty": true
+          }
+        },
+        "sorts": []
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {},
+      "mapper": {
+        "url": "https://api.anthropic.com/v1/messages",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "x-api-key",
+            "value": "{{env.ANTHROPIC_API_KEY}}"
+          },
+          {
+            "name": "anthropic-version",
+            "value": "2023-06-01"
+          }
+        ],
+        "body": "{\"model\":\"claude-sonnet-4-5-20250929\",\"max_tokens\":8000,\"temperature\":0,\"system\":\"You are a relationship intelligence analyst processing interactions for Brian, founder of ManageAI and Sanctuary Recovery Centers.\\n\\nYour job is to extract STRUCTURED FACTS from the interaction below. Every fact must be:\\n1. A specific, concrete claim — not a vague summary\\n2. Attributed to a specific speaker\\n3. Categorized precisely\\n4. Grounded with a source reference (timestamp for transcripts, paragraph for emails, activity type for Pipedrive)\\n\\nCATEGORIES:\\n- Commitment: A promise or agreement to do something (by either party). MUST include who committed and what.\\n- Decision: A definitive choice or agreement reached. Must be stated, not implied.\\n- Concern: A worry, objection, risk, or pushback raised by someone.\\n- Feedback: Product feedback, service feedback, or process feedback.\\n- Priority: Something someone explicitly stated as important or a goal.\\n- Preference: How someone likes to work, communicate, or approach things.\\n- Context: Important background information (budget numbers, timelines, team size, deal values, etc.)\\n- Request: Something someone asked for that isn't a commitment yet.\\n- Milestone: A completed achievement or checkpoint (including deal stage changes).\\n\\nRETURN FORMAT (JSON only, no markdown, no preamble, no code fences):\\n{\\n  \\\"facts\\\": [\\n    {\\n      \\\"claim\\\": \\\"Concise factual statement\\\",\\n      \\\"category\\\": \\\"Commitment|Decision|Concern|Feedback|Priority|Preference|Context|Request|Milestone\\\",\\n      \\\"relationship\\\": \\\"Person or company name this fact belongs to\\\",\\n      \\\"speaker\\\": \\\"Who said/wrote this\\\",\\n      \\\"timestamp\\\": \\\"HH:MM for transcripts, 'paragraph N' for emails, 'activity' for Pipedrive\\\",\\n      \\\"confidence\\\": \\\"High|Medium|Low\\\",\\n      \\\"sentiment\\\": \\\"Positive|Neutral|Negative|Urgent\\\",\\n      \\\"due_date\\\": \\\"YYYY-MM-DD or null (for commitments/requests with deadlines)\\\",\\n      \\\"tags\\\": [\\\"relevant\\\", \\\"topic\\\", \\\"tags\\\"]\\n    }\\n  ],\\n  \\\"action_items\\\": [\\n    {\\n      \\\"title\\\": \\\"Specific actionable task\\\",\\n      \\\"owner\\\": \\\"Person responsible (default to Brian if unclear)\\\",\\n      \\\"priority\\\": \\\"P1|P2|P3\\\",\\n      \\\"due_date\\\": \\\"YYYY-MM-DD or null\\\",\\n      \\\"relationship\\\": \\\"Related person/company\\\"\\n    }\\n  ],\\n  \\\"summary\\\": \\\"One paragraph summary of the interaction (2-4 sentences)\\\"\\n}\\n\\nRULES:\\n1. Extract EVERY notable fact — err on the side of more facts, not fewer\\n2. Commitments are the highest-priority category — never miss a promise\\n3. If someone says \\\"I'll\\\" or \\\"we'll\\\" or \\\"let's\\\" — that's likely a Commitment\\n4. If someone says \\\"I'm worried about\\\" or \\\"the risk is\\\" — that's a Concern\\n5. Budget numbers, headcount, dates, deal values, and specific metrics are always Context facts\\n6. Don't extract pleasantries, small talk, or logistical coordination (\\\"let's hop on a call\\\") as facts\\n7. If a fact supersedes a previous one (e.g., deadline moved), note \\\"supersedes\\\" in tags\\n8. For commitments, always try to extract a due_date even if approximate\\n9. confidence=High means explicitly stated. Medium means clearly implied. Low means inferred from context.\\n10. Each fact should stand alone — someone reading just the claim should understand it without needing the full interaction\\n11. For Pipedrive deal updates: stage changes are Milestones, deal values are Context, expected close dates are Commitments\\n12. For emails: attribute facts to the sender of each message in the thread\\n\",\"messages\":[{\"role\":\"user\",\"content\":\"Process this {{trigger.type}}:\\n\\n{{ifempty(trigger.raw_content; steps[3].rawContent)}}\"}]}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 5,
+      "module": "json:ParseJSON",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "text": "{{body.content[0].text}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "builtin:BasicIterator",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "array": "{{steps[5].facts}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1800,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 7,
+      "module": "notion:searchObjects",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "filter": {
+          "property": "Name",
+          "title": {
+            "contains": "{{item.relationship}}"
+          }
+        },
+        "sorts": []
+      },
+      "metadata": {
+        "designer": {
+          "x": 2100,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 8,
+      "module": "notion:createAPage",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "properties": {
+          "Fact": {
+            "title": [
+              {
+                "text": {
+                  "content": "{{item.claim}}"
+                }
+              }
+            ]
+          },
+          "Category": {
+            "select": {
+              "name": "{{item.category}}"
+            }
+          },
+          "Speaker": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": "{{item.speaker}}"
+                }
+              }
+            ]
+          },
+          "Source Timestamp": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": "{{item.timestamp}}"
+                }
+              }
+            ]
+          },
+          "Confidence": {
+            "select": {
+              "name": "{{item.confidence}}"
+            }
+          },
+          "Sentiment": {
+            "select": {
+              "name": "{{item.sentiment}}"
+            }
+          },
+          "Status": {
+            "select": {
+              "name": "Active"
+            }
+          },
+          "Extracted Date": {
+            "date": {
+              "start": "{{formatDate(now; 'YYYY-MM-DD')}}"
+            }
+          },
+          "Relationship": {
+            "relation": [
+              {
+                "id": "{{steps[7][0].id}}"
+              }
+            ]
+          },
+          "Source Interaction": {
+            "relation": [
+              {
+                "id": "{{trigger.interaction_id}}"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "designer": {
+          "x": 2400,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 9,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "parameters": {},
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 2700,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 10,
+      "module": "builtin:BasicIterator",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "array": "{{steps[5].action_items}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 3000,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 11,
+      "module": "notion:createAPage",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "properties": {
+          "Name": {
+            "title": [
+              {
+                "text": {
+                  "content": "{{item.title}}"
+                }
+              }
+            ]
+          },
+          "Priority": {
+            "select": {
+              "name": "{{item.priority}}"
+            }
+          },
+          "Created By": {
+            "select": {
+              "name": "Fact Extraction"
+            }
+          }
+        }
+      },
+      "metadata": {
+        "designer": {
+          "x": 3300,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 12,
+      "module": "notion:updateAPage",
+      "version": 2,
+      "parameters": {},
+      "mapper": {
+        "page_id": "{{trigger.interaction_id}}",
+        "properties": {
+          "Processed": {
+            "checkbox": true
+          },
+          "Summary": {
+            "rich_text": [
+              {
+                "text": {
+                  "content": "{{steps[5].summary}}"
+                }
+              }
+            ]
+          },
+          "Facts Extracted": {
+            "number": "{{length(steps[5].facts)}}"
+          }
+        }
+      },
+      "metadata": {
+        "designer": {
+          "x": 3600,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 13,
+      "module": "gateway:WebhookResponse",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "status": 200,
+        "body": "{\"success\":true,\"facts_extracted\":{{length(steps[5].facts)}},\"tasks_created\":{{length(steps[5].action_items)}},\"summary\":\"{{steps[5].summary}}\"}",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 3900,
+          "y": 0
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false
+    }
+  }
+}

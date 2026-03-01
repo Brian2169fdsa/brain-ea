@@ -1,1 +1,73 @@
-// Placeholder: Sample Pipedrive deal payload for CRM sync testing
+{
+  "deal": {
+    "id": 1234,
+    "title": "Sunstate Medical Transport — AI Automation Pilot",
+    "value": 3500,
+    "currency": "USD",
+    "stage_id": 3,
+    "stage_name": "Proposal",
+    "person_id": 5678,
+    "person_name": "Tony",
+    "org_id": 91011,
+    "org_name": "Sunstate Medical Transport",
+    "expected_close_date": "2026-03-15",
+    "add_time": "2026-01-15",
+    "update_time": "2026-02-28",
+    "pipeline_id": 1,
+    "pipeline_name": "Sales Pipeline",
+    "owner_name": "Brian",
+    "status": "open",
+    "probability": 75,
+    "lost_reason": null,
+    "visible_to": "3",
+    "label": "Hot"
+  },
+  "activities": [
+    {
+      "id": 100,
+      "type": "call",
+      "subject": "Initial discovery call",
+      "note": "Tony described their current manual call-ahead process. Dispatchers spend 2-3 hours daily calling facilities. They've looked at Halo Health but found their pricing too high and integration timeline too long (6 months). Tony is very interested in a faster, more affordable solution. They handle about 120 transports per day across 8 facilities in the Phoenix metro area.",
+      "due_date": "2026-01-20",
+      "done": true,
+      "person_id": 5678,
+      "org_id": 91011,
+      "marked_as_done_time": "2026-01-20 15:30:00"
+    },
+    {
+      "id": 101,
+      "type": "meeting",
+      "subject": "Demo walkthrough",
+      "note": "Walked through Retell AI call-ahead demo. Tony approved pilot for 3 facilities (Phoenix, Scottsdale, Mesa). Committed to March 15 start date. Budget approved at $3,500/month. Tony flagged HIPAA compliance as critical requirement — needs BAA before go-live. Also mentioned need for Spanish language support (30% of facility contacts). Tony's operations director Sarah is on board. Competitor Halo Health was mentioned again — Tony said our pricing and timeline are much better.",
+      "due_date": "2026-02-28",
+      "done": true,
+      "person_id": 5678,
+      "org_id": 91011,
+      "marked_as_done_time": "2026-02-28 14:00:00"
+    },
+    {
+      "id": 102,
+      "type": "email",
+      "subject": "Pricing follow-up",
+      "note": "Sent formal pricing breakdown. Tony confirmed budget is approved but needs formal pricing document by March 7 for procurement process. Wants BAA and data flow documentation included in SOW package.",
+      "due_date": "2026-02-26",
+      "done": true,
+      "person_id": 5678,
+      "org_id": 91011,
+      "marked_as_done_time": "2026-02-26 10:00:00"
+    }
+  ],
+  "stage_changes": [
+    { "stage": "Qualified", "date": "2026-01-22" },
+    { "stage": "Proposal", "date": "2026-02-20" }
+  ],
+  "participants": [
+    {
+      "person_id": 5678,
+      "person_name": "Tony Martinez",
+      "email": "tony@sunstatetransport.com",
+      "phone": "602-555-0187",
+      "primary_flag": true
+    }
+  ]
+}

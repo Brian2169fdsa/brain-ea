@@ -17,7 +17,8 @@
     "@anthropic-ai/sdk": "^0.30.0",
     "@notionhq/client": "^2.2.0",
     "axios": "^1.7.0",
-    "dotenv": "^16.4.0"
+    "dotenv": "^16.4.0",
+    "pipedrive": "^13.0.0"
   },
   "engines": {
     "node": ">=18.0.0"

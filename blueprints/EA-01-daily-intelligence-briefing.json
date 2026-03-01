@@ -1,0 +1,186 @@
+{
+  "name": "EA-01 — Daily Intelligence Briefing",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "ip": "",
+        "method": "POST",
+        "headers": []
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "notion:searchObjects",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "filter": {
+          "property": "Status",
+          "status": {
+            "does_not_equal": "Done"
+          }
+        },
+        "sorts": [
+          {
+            "property": "Priority",
+            "direction": "ascending"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "notion:searchObjects",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "filter": {
+          "and": [
+            {
+              "property": "Category",
+              "select": {
+                "equals": "Commitment"
+              }
+            },
+            {
+              "property": "Status",
+              "select": {
+                "equals": "Active"
+              }
+            }
+          ]
+        },
+        "sorts": []
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "notion:searchObjects",
+      "version": 2,
+      "parameters": {
+        "database_id": "REPLACE_WITH_DB_ID"
+      },
+      "mapper": {
+        "filter": {
+          "property": "Stage",
+          "select": {
+            "equals": "Active"
+          }
+        },
+        "sorts": []
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 5,
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "parameters": {},
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {},
+      "mapper": {
+        "url": "https://api.anthropic.com/v1/messages",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "x-api-key",
+            "value": "{{env.ANTHROPIC_API_KEY}}"
+          },
+          {
+            "name": "anthropic-version",
+            "value": "2023-06-01"
+          }
+        ],
+        "body": "{\"model\":\"claude-sonnet-4-5-20250929\",\"max_tokens\":4000,\"temperature\":0.3,\"system\":\"You are formatting Brian's daily intelligence briefing.\\n\\nGiven data about tasks, commitments, relationships, meetings, and deals, create a concise executive briefing.\\n\\nFORMAT:\\n📋 TODAY'S PRIORITIES\\n- Top 5 tasks by priority with due dates and linked relationships\\n\\n📅 MEETINGS\\n- Today's meetings with time, participants, and key context pulled from Facts DB\\n- For each meeting participant: show last relevant fact or commitment\\n\\n⚠️ COMMITMENTS DUE\\n- Overdue commitments (by Brian to others AND by others to Brian) with relationship and source\\n- Commitments due this week\\n\\n💰 DEAL UPDATES (from Pipedrive)\\n- Deals with expected close this week\\n- Deals that changed stage recently\\n- Deals at risk (stale or negative sentiment)\\n\\n👥 RELATIONSHIPS NEEDING ATTENTION\\n- Active contacts with no interaction in 7+ days\\n- Relationships with unresolved concerns\\n- Contacts with overdue commitments\\n\\n💡 SUGGESTED ACTIONS\\n- 2-3 proactive suggestions based on the intelligence data\\n\\nKeep it brief. Brian is busy. Every claim cites its source. No fluff.\\n\",\"messages\":[{\"role\":\"user\",\"content\":\"Format today's briefing from this data:\\n\\n{{JSON.stringify($result)}}\"}]}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1800,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 7,
+      "module": "gateway:WebhookResponse",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "status": 200,
+        "body": "{{body.content[0].text}}",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 2100,
+          "y": 0
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false
+    }
+  }
+}

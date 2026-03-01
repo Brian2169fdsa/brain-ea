@@ -1,1 +1,47 @@
-// Placeholder: Sample email thread #2 for fact extraction testing
+From: tony@sunstatetransport.com
+To: brian@manageai.io
+Date: February 26, 2026
+Subject: Re: Pilot Pricing — Call-Ahead Automation
+
+Brian,
+
+Thanks for the detailed pricing breakdown. A few things:
+
+1. The $3,500/month for three facilities is within our budget. I just need to get it through our procurement process, which takes about a week. Can you have the formal pricing document ready by March 7?
+
+2. I talked to our compliance officer about the HIPAA requirements. She wants to review the BAA and data flow documentation before we can proceed. Can you include those in the SOW package?
+
+3. One thing I forgot to mention in our call — we also need the AI agent to handle appointment confirmations. Right now our staff calls patients directly to confirm their transport time. If the AI could handle that too, it would save us even more time.
+
+4. The March 15 start date works for our side. I've already looped in our operations director, Sarah, and she's on board.
+
+Let me know about the pricing doc and BAA timing.
+
+Thanks,
+Tony Martinez
+Director of Operations
+Sunstate Medical Transport
+
+---
+
+From: brian@manageai.io
+To: tony@sunstatetransport.com
+Date: February 25, 2026
+Subject: Pilot Pricing — Call-Ahead Automation
+
+Tony,
+
+Great talking with you yesterday. As discussed, here's the pricing summary for the pilot:
+
+- Scope: 3 facilities (Phoenix, Scottsdale, Mesa)
+- Monthly cost: $3,500 (includes AI minutes, setup, and support)
+- Start date: March 15, 2026
+- Go-live target: March 29, 2026
+- Includes: Retell AI call-ahead agents, facility and patient-facing, bilingual (English/Spanish)
+
+I'll have the full SOW with HIPAA documentation ready by March 5.
+
+Let me know if you have any questions.
+
+Best,
+Brian
